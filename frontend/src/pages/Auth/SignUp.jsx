@@ -13,7 +13,11 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
-import { validateEmail } from "../../utils/helper";
+import {
+  validateAvatar,
+  validateEmail,
+  validatePassword,
+} from "../../utils/helper";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -71,7 +75,7 @@ const SignUp = () => {
           ...prev,
           errors: { ...prev.errors, avatar: error },
         }));
-        return
+        return;
       }
 
       setFormData((prev) => ({ ...prev, avatar: file }));
@@ -84,7 +88,7 @@ const SignUp = () => {
           avatarPreview: e.target.result,
           errors: { ...prev.errors, avatar: "" },
         }));
-      }
+      };
       reader.readAsDataURL(file);
     }
   };
@@ -96,7 +100,7 @@ const SignUp = () => {
       password: validatePassword(formData.password),
       role: !formData.role ? "Pleasr select your role" : "",
       avatar: "",
-    }
+    };
 
     // Remove empty errors
     Object.keys(errors).forEach((key) => {
@@ -123,7 +127,7 @@ const SignUp = () => {
     try {
       // Create user
     } catch (error) {
-      console.log("error", error)
+      console.log("error", error);
 
       setFormState((prev) => ({
         ...prev,
