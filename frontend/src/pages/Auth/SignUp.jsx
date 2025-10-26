@@ -18,8 +18,13 @@ import {
   validateEmail,
   validatePassword,
 } from "../../utils/helper";
+import uploadImage from "../../utils/uploadImage";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import { useAuth } from "../../context/AuthContext";
 
 const SignUp = () => {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -126,6 +131,41 @@ const SignUp = () => {
 
     try {
       // Create user
+      let avatarUrl = "";
+
+      // Upload image if present
+      if (formData.avatar) {
+        const imgUploadRes = await uploadImage(formData.avatar);
+        avatarUrl = imgUploadRes.imageUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        avatar: avatarUrl || "",
+        role: formData.role,
+      });
+
+      // Handle successful registration
+      setFormState((prev) => ({
+        ...prev,
+        loading: false,
+        success: true,
+        errors: {},
+      }));
+
+      const { token } = response.data;
+
+      if (token) {
+        login(response.data, token);
+
+        // Redirect based on role
+        setTimeout(() => {
+          window.location.href =
+            formData.role === "employer" ? "/employer-dashboard" : "/find-jobs";
+        }, 2000);
+      }
     } catch (error) {
       console.log("error", error);
 
@@ -141,7 +181,7 @@ const SignUp = () => {
     }
   };
 
-  if (formState.successs) {
+  if (formState.success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
         <motion.div

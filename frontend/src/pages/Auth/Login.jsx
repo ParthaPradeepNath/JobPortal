@@ -10,8 +10,12 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { validateEmail } from "../../utils/helper";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
+  const {login} = useAuth()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -79,6 +83,37 @@ const Login = () => {
 
     try {
       // Login API Integration
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      })
+
+      setFormState((prev) => ({
+        ...prev,
+        loading: false,
+        successs: true,
+        errors: {},
+      }))
+
+      const { token, role} = response.data;
+
+      if (token) {
+        login(response.data, token)
+
+        // Redirect based on role
+        setTimeout(() => {
+          window.location.href =
+          role==="employer" ? "/employer-dashboard" : "/find-jobs"
+        }, 2000)
+      }
+
+      // Redirect based on user role
+      setTimeout(() => {
+        const redirectPath = User.role === "employer" ? "/employer-dashboard" : "/find-jobs"
+        window.location.href = redirectPath
+      }, 1500)
+      
     } catch (error) {
       setFormState((prev) => ({
         ...prev,
