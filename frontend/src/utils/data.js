@@ -71,23 +71,23 @@ export const employerFeatures = [
 export const NAVIGATION_MENU = [
   {
     id: "employer-dashboard",
-    name: "Home",
-    icon: "Home",
+    name: "Dashboard",
+    icon: LayoutDashboard,
   },
   {
     id: "post-jobs",
-    name: "Jobs",
-    icon: "Briefcase",
+    name: "Post Job",
+    icon: Plus,
   },
   {
     id: "manage-jobs",
-    name: "Employers",
-    icon: "Users",
+    name: "Manage Job",
+    icon: Briefcase,
   },
   {
     id: "company-profile",
-    name: "Messages",
-    icon: "MessageSquare",
+    name: "Company Profile",
+    icon: Building2,
   },
 ];
 
