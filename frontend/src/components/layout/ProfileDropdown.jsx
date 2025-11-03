@@ -10,6 +10,7 @@ const ProfileDropdown = ({
   onLogout,
 }) => {
   const navigate = useNavigate();
+  
   return (
     <div className="relative">
       <button
