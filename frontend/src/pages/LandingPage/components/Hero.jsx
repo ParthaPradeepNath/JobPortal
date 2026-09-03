@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import {motion} from 'framer-motion'
 import {Search, ArrowRight, Users, Building2, TrendingUp} from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -107,7 +108,7 @@ const Hero = () => {
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>
         <div className='absolute top-20 left-10 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-30' />
         <div className='absolute bottom-20 right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-30'/>
-        <div className='abso;ute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-3xl opacity-20'/>
+        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-3xl opacity-20'/>
       </div>
     </section>
   )

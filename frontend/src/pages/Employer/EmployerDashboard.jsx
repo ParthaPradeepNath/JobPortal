@@ -42,6 +42,7 @@ const Card = ({ title, subtitle, headerAction, className, children }) => {
 const StatCard = ({
   title,
   value,
+  // eslint-disable-next-line no-unused-vars
   icon: Icon,
   trend,
   trendValue,

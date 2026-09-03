@@ -2,6 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
+// Fast refresh is disabled for this file because it exports both a context
+// hook and a provider component, which is the standard AuthContext pattern.
+/* eslint-disable react-refresh/only-export-components */
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -17,6 +21,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAuthStatus = async () => {

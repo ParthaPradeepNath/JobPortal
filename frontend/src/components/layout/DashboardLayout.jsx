@@ -32,7 +32,6 @@ const DashboardLayout = ({ activeMenu, children }) => {
   const navigate = useNavigate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeNavItem, setActiveNavItem] = useState(activeMenu || "dashboard");
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -69,7 +68,6 @@ const DashboardLayout = ({ activeMenu, children }) => {
   }, [profileDropdownOpen]);
 
   const handleNavigation = (itemId) => {
-    setActiveNavItem(itemId);
     navigate(`/${itemId}`);
     if (isMobile) {
       setSidebarOpen(false);
@@ -187,6 +185,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
               avatar={user?.avatar || ""}
               companyName={user?.name || ""}
               email={user?.email || ""}
+              role={user?.role || "employer"}
               onLogout={logout}
             />
           </div>

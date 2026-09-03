@@ -48,7 +48,7 @@ exports.deleteResume = async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        if (user.role !== "job-seeker") return res.status(403).json({ message: "Only jobseekers can delete resume" });
+        if (user.role !== "jobseeker") return res.status(403).json({ message: "Only jobseekers can delete resume" });
 
         // Construct the full file path
         const filePath = path.join(__dirname, "../uploads", fileName);

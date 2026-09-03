@@ -98,7 +98,6 @@ export const CATEGORIES = [
   { value: "Design", label: "Design" },
   { value: "Sales", label: "Sales" },
   { value: "IT & Software", label: "IT & Software" },
-  { value: "Marketing", label: "Marketing" },
   { value: "Customer-service", label: "Customer Service" },
   { value: "Finance", label: "Finance" },
   { value: "HR", label: "Human Resources" },

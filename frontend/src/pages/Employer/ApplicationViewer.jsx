@@ -34,7 +34,7 @@ const ApplicationViewer = () => {
         API_PATHS.APPLICATIONS.GET_ALL_APPLICATIONS(jobId)
       );
       setApplications(response.data);
-    } catch (err) {
+    } catch {
       console.log("Failed to fetch applications");
     } finally {
       setLoading(false);
@@ -44,24 +44,23 @@ const ApplicationViewer = () => {
   useEffect(() => {
     if (jobId) fetchApplications();
     else navigate("/manage-jobs");
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobId]);
 
   // Group applications by job
   const groupedApplications = useMemo(() => {
-    const filtered = applications.filter((app) => app.job.title.toLowerCase());
-
-    return filtered.reduce((acc, app) => {
-      const jobId = app.job._id;
-      if (!acc[jobId]) {
-        acc[jobId] = {
+    return applications.reduce((acc, app) => {
+      if (!app.job) return acc;
+      const jId = app.job._id;
+      if (!acc[jId]) {
+        acc[jId] = {
           job: app.job,
           applications: [],
         };
       }
-      acc[jobId].applications.push(app);
+      acc[jId].applications.push(app);
       return acc;
     }, {});
-    return [];
   }, [applications]);
 
   const handleDownloadResume = (resumeUrl) => {
@@ -118,7 +117,7 @@ const ApplicationViewer = () => {
               {Object.values(groupedApplications).map(
                 ({ job, applications }) => (
                   <div
-                    keys={job._id}
+                    key={job._id}
                     className="bg-white rounded-xl shadow-md overflow-hidden"
                   >
                     {/* Job Header */}
@@ -154,7 +153,7 @@ const ApplicationViewer = () => {
                     {/* Application List */}
                     <div className="p-6">
                       <div className="space-y-4">
-                        {application.map((application) => (
+                        {applications.map((application) => (
                           <div
                             key={application._id}
                             className="flex flex-col md:flex-row md:items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"

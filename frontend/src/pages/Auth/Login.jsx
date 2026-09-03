@@ -1,4 +1,5 @@
 import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -43,14 +44,6 @@ const Login = () => {
       [name]: value,
     }));
   };
-
-  // Clear error when user starts typing
-  if (formState.errors[name]) {
-    setFormState((prev) => ({
-      ...prev,
-      errors: { ...prev.errors, [name]: "" },
-    }));
-  }
 
   const validateForm = () => {
     const errors = {
@@ -108,12 +101,7 @@ const Login = () => {
         }, 2000)
       }
 
-      // Redirect based on user role
-      setTimeout(() => {
-        const redirectPath = User.role === "employer" ? "/employer-dashboard" : "/find-jobs"
-        window.location.href = redirectPath
-      }, 1500)
-      
+
     } catch (error) {
       setFormState((prev) => ({
         ...prev,

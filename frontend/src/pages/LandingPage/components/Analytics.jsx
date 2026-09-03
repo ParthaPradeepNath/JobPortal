@@ -1,8 +1,16 @@
 import React from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { TrendingUp, Users, Briefcase, Target } from "lucide-react";
 
 const Analytics = () => {
+  const colorMap = {
+    blue: { bg: "bg-blue-100", text: "text-blue-600" },
+    purple: { bg: "bg-purple-100", text: "text-purple-600" },
+    green: { bg: "bg-green-100", text: "text-green-600" },
+    orange: { bg: "bg-orange-100", text: "text-orange-600" },
+  };
+
   const stats = [
     {
       icon: Users,
@@ -66,9 +74,9 @@ const Analytics = () => {
             >
               <div className="flex items-center justify-between mb-4">
                 <div
-                  className={`w-12 h-12 bg-${stat.color}-100 rounded-xl flex items-center justify-center`}
+                  className={`w-12 h-12 ${colorMap[stat.color]?.bg ?? "bg-blue-100"} rounded-xl flex items-center justify-center`}
                 >
-                  <stat.icon className={`w-6 h-6 text-${stat.color}-600`} />
+                  <stat.icon className={`w-6 h-6 ${colorMap[stat.color]?.text ?? "text-blue-600"}`} />
                 </div>
                 <span className="text-green-500 text-sm font-semibold bg-green-50 px-2 py-1 rounded-full">{stat.growth}</span>
               </div>

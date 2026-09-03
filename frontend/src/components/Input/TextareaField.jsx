@@ -5,7 +5,7 @@ const TextareaField = ({
   id,
   placeholder,
   value,
-  onchange,
+  onChange,
   error,
   helperText,
   required = false,
@@ -23,7 +23,7 @@ const TextareaField = ({
         id={id}
         placeholder={placeholder}
         value={value}
-        onChange={onchange}
+        onChange={onChange}
         disabled={disabled}
         rows={rows}
         className={`w-full px-3 py-2.5 border rounded-lg text-base transition-colors duration-200 resize-y disabled:bg-gray-50 disabled:text-gray-500 ${

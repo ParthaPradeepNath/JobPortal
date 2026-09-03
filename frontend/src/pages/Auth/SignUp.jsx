@@ -1,4 +1,5 @@
 import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import {
   User,
@@ -49,14 +50,6 @@ const SignUp = () => {
       [name]: value,
     }));
   };
-
-  // Clear error when user starts typing
-  if (formState.errors[name]) {
-    setFormState((prev) => ({
-      ...prev,
-      errors: { ...prev.errors, [name]: "" },
-    }));
-  }
 
   const handleRoleChange = (role) => {
     setFormData((prev) => ({

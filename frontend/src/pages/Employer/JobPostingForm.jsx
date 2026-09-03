@@ -182,11 +182,7 @@ const JobPostingForm = () => {
     }
 
     fetchJobDetails()
-  
-    return () => {
-      
-    }
-  }, [])
+  }, [jobId])
   
 
   if (isPreview) {

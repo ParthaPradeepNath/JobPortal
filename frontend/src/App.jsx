@@ -32,8 +32,12 @@ function App() {
 
           <Route path="/find-jobs" element={<JobSeekerDashboard />} />
           <Route path="/job/:jobId" element={<JobDetails />} />
-          <Route path="/saved-jobs" element={<SavedJobs />} />
-          <Route path="/profile" element={<UserProfile />} />
+
+          {/* Team / role-specific protected routes */}
+          <Route element={<ProtectedRoute requiredRoles={["jobseeker"]} />}>
+            <Route path="/saved-jobs" element={<SavedJobs />} />
+            <Route path="/profile" element={<UserProfile />} />
+          </Route>
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute requiredRoles={["employer"]} />}>

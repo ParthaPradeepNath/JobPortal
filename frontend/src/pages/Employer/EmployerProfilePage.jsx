@@ -71,7 +71,9 @@ const EmployerProfilePage = () => {
         formData
       );
 
-      if (response.status === 200) {
+      if (response.status !== 200) {
+        toast.error("Failed to update profile");
+        return;
       }
       toast.success("Profile Details updated successfully!");
       // Update profile data and exit edit mode
@@ -94,7 +96,7 @@ const EmployerProfilePage = () => {
     return (
       <EditProfileDetails
         formData={formData}
-        handleImageChange={handleImageUpload}
+        handleImageChange={handleImageChange}
         handleInputChange={handleInputChange}
         handleSave={handleSave}
         handleCancel={handleCancel}

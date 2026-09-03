@@ -1,16 +1,50 @@
-# React + Vite
+# 📱 JobPortal — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> The React single-page application for the JobPortal platform.
 
-Currently, two official plugins are available:
+Built with **React 19**, **Vite 7**, **Tailwind CSS 4**, **Framer Motion**, and **React Router 7**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## React Compiler
+```bash
+# Install dependencies
+pnpm install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Copy environment variables
+cp .env.example .env
 
-## Expanding the ESLint configuration
+# Start the dev server (http://localhost:5173)
+pnpm dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Scripts
+
+| Command        | Description            |
+|----------------|------------------------|
+| `pnpm dev`     | Start Vite dev server  |
+| `pnpm build`   | Production build       |
+| `pnpm lint`    | Run ESLint             |
+| `pnpm preview` | Preview production build |
+
+## Projects Structure
+
+```
+src/
+├── components/      # Reusable UI (cards, inputs, layouts)
+├── context/         # Auth state management
+├── pages/           # Route-level views
+│   ├── Auth/        # Login & Sign Up
+│   ├── Employer/    # Employer dashboard & tools
+│   ├── JobSeeker/   # Find jobs, details, saved & profile
+│   └── LandingPage/ # Public marketing pages
+├── routes/          # Protected route guards
+└── utils/           # Axios instance, API paths, helpers
+```
+
+## Environment Variables
+
+| Variable             | Default               | Description                |
+|----------------------|-----------------------|----------------------------|
+| `VITE_API_BASE_URL`  | `http://localhost:8000` | Base URL of the backend API |
+
+See the root [`README.md`](../README.md) for the full project documentation.

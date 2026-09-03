@@ -7,9 +7,11 @@ const ProfileDropdown = ({
   avatar,
   companyName,
   email,
+  role = "employer",
   onLogout,
 }) => {
   const navigate = useNavigate();
+  const roleLabel = role === "jobseeker" ? "Job Seeker" : "Employer";
   
   return (
     <div className="relative">
@@ -26,13 +28,13 @@ const ProfileDropdown = ({
         ) : (
           <div className="h-8 w-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
             <span className="text-white font-semibold text-sm">
-              {companyName.charAt(0).toUpperCase()}
+              {companyName?.charAt(0).toUpperCase()}
             </span>
           </div>
         )}
         <div className="hidden sm:block text-left">
           <p className="text-sm font-medium text-gray-900">{companyName}</p>
-          <p className="text-xs text-gray-500">Employer</p>
+          <p className="text-xs text-gray-500">{roleLabel}</p>
         </div>
         <ChevronDown className="h-4 w-4 text-gray-400" />
       </button>
@@ -46,11 +48,9 @@ const ProfileDropdown = ({
 
           <a
             onClick={() =>
-              navigate(
-                userRole === "jobseeker" ? "/profile" : "/company-profile"
-              )
+              navigate(role === "jobseeker" ? "/profile" : "/company-profile")
             }
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
           >
             View Profile
           </a>
