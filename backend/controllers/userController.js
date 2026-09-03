@@ -1,9 +1,13 @@
-const fs = require("fs");
-const path = require("path");
-const User = require("../models/User");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import User from "../models/User.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // @desc  Update user profile (name, avatar, company details)
-exports.updateProfile = async (req, res) => {
+export const updateProfile = async (req, res) => {
     try {
         const {name, avatar, resume, companyName, companyDescription, companyLogo} = req.body;
         const  user = await User.findById(req.user._id);
@@ -38,7 +42,7 @@ exports.updateProfile = async (req, res) => {
 }
 
 // @desc  Delete user resume file (Jobseeker only)
-exports.deleteResume = async (req, res) => {
+export const deleteResume = async (req, res) => {
     try {
         const {resumeUrl} = req.body; // expect resumeUrl to be the URL of the resume
 
@@ -69,7 +73,7 @@ exports.deleteResume = async (req, res) => {
 }
 
 // @desc  Get public user profile
-exports.getPublicProfile = async (req, res) => {
+export const getPublicProfile = async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select("-password");
 

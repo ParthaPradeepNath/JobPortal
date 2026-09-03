@@ -1,10 +1,8 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const { protect } = require("../middlewares/authMiddleware.js");
-const {
-  getEmployerAnalytics,
-} = require("../controllers/analyticsController.js");
+import { protect } from "../middlewares/authMiddleware.js";
+import { getEmployerAnalytics } from "../controllers/analyticsController.js";
 
 router.get("/overview", protect, getEmployerAnalytics);
 
-module.exports = router;
+export default router;

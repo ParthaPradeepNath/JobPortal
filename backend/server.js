@@ -1,15 +1,16 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-const connectDB = require("./config/db");
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import connectDB from "./config/db.js";
 
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const jobRoutes = require("./routes/jobRoutes");
-const applicationRoutes = require("./routes/applicationRoutes");
-const savedJobsRoutes = require("./routes/savedJobsRoutes");
-const analyticsRoutes = require("./routes/analyticsRoutes");
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
+import savedJobsRoutes from "./routes/savedJobsRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 
 const app = express()
 
@@ -37,6 +38,8 @@ app.use("/api/save-jobs", savedJobsRoutes)
 app.use("/api/analytics", analyticsRoutes)
 
 // Serve uploads folder
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
 
 // Start Server

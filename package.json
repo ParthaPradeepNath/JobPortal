@@ -1,0 +1,18 @@
+{
+  "name": "jobportal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A full-stack job portal connecting talented professionals with innovative companies.",
+  "packageManager": "pnpm@11.24.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev:frontend": "pnpm --dir frontend dev",
+    "dev:backend": "pnpm --dir backend dev",
+    "build": "pnpm --dir frontend build",
+    "lint": "pnpm --dir frontend lint",
+    "install:all": "pnpm --dir frontend install && pnpm --dir backend install"
+  }
+}

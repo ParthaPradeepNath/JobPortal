@@ -1,10 +1,10 @@
-const Job = require("../models/Job");
-const User = require("../models/User");
-const Application = require("../models/Application");
-const SavedJob = require("../models/SavedJob");
+import Job from "../models/Job.js";
+import User from "../models/User.js";
+import Application from "../models/Application.js";
+import SavedJob from "../models/SavedJob.js";
 
 // @desc  Create a new job (Employer only)
-exports.createJob = async (req, res) => {
+export const createJob = async (req, res) => {
   try {
     if (req.user.role !== "employer")
       return res.status(403).json({ message: "Only employers can post jobs" });
@@ -17,7 +17,7 @@ exports.createJob = async (req, res) => {
 };
 
 // @desc  Get all jobs (for jobseeker)
-exports.getJobs = async (req, res) => {
+export const getJobs = async (req, res) => {
   const { keyword, location, category, type, minSalary, maxSalary, userId } =
     req.query;
 
@@ -73,7 +73,7 @@ exports.getJobs = async (req, res) => {
 };
 
 // @desc  Get jobs posted by logged-in employer
-exports.getJobsEmployer = async (req, res) => {
+export const getJobsEmployer = async (req, res) => {
   try {
     const userId = req.user._id;
     const { role } = req.user;
@@ -100,7 +100,7 @@ exports.getJobsEmployer = async (req, res) => {
 };
 
 // @desc  Get single job by ID
-exports.getJobById = async (req, res) => {
+export const getJobById = async (req, res) => {
   try {
     const { userId } = req.query;
     const job = await Job.findById(req.params.id).populate(
@@ -127,7 +127,7 @@ exports.getJobById = async (req, res) => {
 };
 
 // @desc  Update a job (Employer only)
-exports.updateJob = async (req, res) => {
+export const updateJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: "Job not found" });
@@ -145,7 +145,7 @@ exports.updateJob = async (req, res) => {
 };
 
 // @desc  Delete a job (Employer only)
-exports.deleteJob = async (req, res) => {
+export const deleteJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: "Job not found" });
@@ -162,7 +162,7 @@ exports.deleteJob = async (req, res) => {
 };
 
 // @desc  Toggle Close Status for a job (Employer only)
-exports.toggleCloseJob = async (req, res) => {
+export const toggleCloseJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: "Job not found" });

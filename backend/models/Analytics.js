@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const analyticsSchema = new mongoose.Schema({
     employer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
@@ -8,4 +8,4 @@ const analyticsSchema = new mongoose.Schema({
 
 }, {timestamps: true})
 
-module.exports = mongoose.model("Analytics", analyticsSchema)
+export default mongoose.model("Analytics", analyticsSchema);

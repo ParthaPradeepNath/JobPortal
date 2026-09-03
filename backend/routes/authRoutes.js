@@ -1,7 +1,7 @@
-const express = require("express");
-const {register, Login, getMe} =require("../controllers/authController.js");
-const {protect} = require("../middlewares/authMiddleware.js");
-const upload = require("../middlewares/uploadMiddleware.js");
+import express from "express";
+import { register, Login, getMe } from "../controllers/authController.js";
+import { protect } from "../middlewares/authMiddleware.js";
+import upload from "../middlewares/uploadMiddleware.js";
 
 
 const router = express.Router();
@@ -20,4 +20,4 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
     res.status(200).json({ imageUrl });
 })
 
-module.exports = router
+export default router

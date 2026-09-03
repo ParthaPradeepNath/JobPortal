@@ -1,11 +1,11 @@
-const Job = require("../models/Job");
-const Application = require("../models/Application");
+import Job from "../models/Job.js";
+import Application from "../models/Application.js";
 
 const getTrend = (current, previous) => {
   if (previous === 0) return current > 0 ? 100 : 0;
 };
 
-exports.getEmployerAnalytics = async (req, res) => {
+export const getEmployerAnalytics = async (req, res) => {
   try {
     if (req.user.role !== "employer") {
       return res.status(403).json({ message: "Access Denied" });

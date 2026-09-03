@@ -1,7 +1,7 @@
-const SavedJob = require("../models/SavedJob.js");
+import SavedJob from "../models/SavedJob.js";
 
 // @desc  Save a job
-exports.saveJob = async (req, res) => {
+export const saveJob = async (req, res) => {
   try {
     const exists = await SavedJob.findOne({
       job: req.params.jobId,
@@ -20,7 +20,7 @@ exports.saveJob = async (req, res) => {
 };
 
 // @desc  Unsave a job
-exports.unsaveJob = async (req, res) => {
+export const unsaveJob = async (req, res) => {
   try {
     await SavedJob.findOneAndDelete({
       job: req.params.jobId,
@@ -35,7 +35,7 @@ exports.unsaveJob = async (req, res) => {
 };
 
 // @desc  Get saved jobs for current user
-exports.getMySavedJobs = async (req, res) => {
+export const getMySavedJobs = async (req, res) => {
   try {
     const savedJobs = await SavedJob.find({ jobseeker: req.user._id }).populate(
       {

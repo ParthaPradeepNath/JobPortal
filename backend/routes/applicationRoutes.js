@@ -1,13 +1,12 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   applyToJob,
   getMyApplications,
-  getApplicationById,
   getApplicationForJob,
+  getApplicationById,
   updateStatus,
-} = require("../controllers/applicationController.js");
-const { protect } = require("../middlewares/authMiddleware.js");
-const { get } = require("mongoose");
+} from "../controllers/applicationController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -17,4 +16,4 @@ router.get("/job/:jobId", protect, getApplicationForJob);
 router.get("/:id", protect, getApplicationById);
 router.put("/:id/status", protect, updateStatus);
 
-module.exports = router;
+export default router;

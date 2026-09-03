@@ -1,8 +1,8 @@
-const Application = require("../models/Application.js");
-const Job = require("../models/Job.js");
+import Application from "../models/Application.js";
+import Job from "../models/Job.js";
 
 // @desc    Apply to a job
-exports.applyToJob = async (req, res) => {
+export const applyToJob = async (req, res) => {
   try {
     if (req.user.role !== "jobseeker") {
       return res
@@ -31,7 +31,7 @@ exports.applyToJob = async (req, res) => {
 };
 
 //@desc    Get logged-in user's applications
-exports.getMyApplications = async (req, res) => {
+export const getMyApplications = async (req, res) => {
   try {
     const apps = await Application.find({ applicant: req.user._id })
       .populate("job", "title location category type")
@@ -44,7 +44,7 @@ exports.getMyApplications = async (req, res) => {
 };
 
 // @desc    Get all applicants for a job (Employer)
-exports.getApplicationForJob = async (req, res) => {
+export const getApplicationForJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.jobId);
 
@@ -65,7 +65,7 @@ exports.getApplicationForJob = async (req, res) => {
 };
 
 // @desc    Get application by ID (Jobseeker or Employer)
-exports.getApplicationById = async (req, res) => {
+export const getApplicationById = async (req, res) => {
   try {
     const app = await Application.findById(req.params.id)
       .populate("job", "title")
@@ -93,7 +93,7 @@ exports.getApplicationById = async (req, res) => {
 };
 
 // @desc    Update application status (Employer)
-exports.updateStatus = async (req, res) => {
+export const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
     const app = await Application.findById(req.params.id).populate("job");

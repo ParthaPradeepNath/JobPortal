@@ -1,14 +1,14 @@
-const express = require("express");
-const {
-    createJob,
-    getJobs,
-    getJobById,
-    updateJob,
-    deleteJob,
-    toggleCloseJob,
-    getJobsEmployer,
-} = require("../controllers/jobController.js");
-const {protect} = require("../middlewares/authMiddleware.js");
+import express from "express";
+import {
+  createJob,
+  getJobs,
+  getJobsEmployer,
+  getJobById,
+  updateJob,
+  deleteJob,
+  toggleCloseJob,
+} from "../controllers/jobController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -17,4 +17,4 @@ router.route("/get-jobs-employer").get(protect, getJobsEmployer)
 router.route("/:id").get(getJobById).put(protect, updateJob).delete(protect, deleteJob)
 router.put("/:id/toggle-close", protect, toggleCloseJob)
 
-module.exports = router;
+export default router;

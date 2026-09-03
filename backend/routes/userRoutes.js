@@ -1,10 +1,6 @@
-const express = require("express");
-const {
-    updateProfile,
-    deleteResume,
-    getPublicProfile,
-} = require("../controllers/userController.js");
-const {protect} = require("../middlewares/authMiddleware.js");
+import express from "express";
+import { updateProfile, deleteResume, getPublicProfile } from "../controllers/userController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -15,4 +11,4 @@ router.post("/resume", protect, deleteResume);
 // Public Routes
 router.get("/:id", getPublicProfile);
 
-module.exports = router;
+export default router;

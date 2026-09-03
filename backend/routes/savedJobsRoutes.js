@@ -1,14 +1,10 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const { protect } = require("../middlewares/authMiddleware.js");
-const {
-    saveJob,
-    unsaveJob,
-    getMySavedJobs,
-} = require("../controllers/savedJobController.js")
+import { protect } from "../middlewares/authMiddleware.js";
+import { saveJob, unsaveJob, getMySavedJobs } from "../controllers/savedJobController.js";
 
 router.post("/:jobId", protect, saveJob);
 router.delete("/:jobId", protect, unsaveJob);
 router.get("/my", protect, getMySavedJobs);
 
-module.exports=router
+export default router;
