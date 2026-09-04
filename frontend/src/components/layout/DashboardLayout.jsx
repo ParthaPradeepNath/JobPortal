@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Briefcase, Building2, LogOut, Menu, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { NAVIGATION_MENU } from "../../utils/data";
-import ProfileDropdown from "./ProfileDropdown";
+import { useState, useEffect } from 'react';
+import { Briefcase, Building2, LogOut, Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { NAVIGATION_MENU } from '../../utils/data';
+import ProfileDropdown from './ProfileDropdown';
 
 const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
   const Icon = item.icon;
@@ -11,17 +11,13 @@ const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
   return (
     <button
       onClick={() => onClick(item.id)}
-      className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group ${
+      className={`group flex w-full items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
         isActive
-          ? "bg-blue-50 text-blue-700 shadow-sm shadow-blue-50"
-          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          ? 'bg-blue-50 text-blue-700 shadow-sm shadow-blue-50'
+          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
       }`}
     >
-      <Icon
-        className={`w-5 h-5 flex-shrink-0 ${
-          isActive ? "text-blue-600" : "text-gray-500"
-        }`}
-      />
+      <Icon className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
       {!isCollapsed && <span className="ml-3 truncate">{item.name}</span>}
     </button>
   );
@@ -45,10 +41,10 @@ const DashboardLayout = ({ activeMenu, children }) => {
       }
     };
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -60,10 +56,10 @@ const DashboardLayout = ({ activeMenu, children }) => {
       }
     };
 
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [profileDropdownOpen]);
 
@@ -84,34 +80,28 @@ const DashboardLayout = ({ activeMenu, children }) => {
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 transition-transform duration-300 transform ${
-          isMobile
-            ? sidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
-            : "translate-x-0"
-        } ${
-          sidebarCollapsed ? "w-16" : "w-64"
-        } bg-white border-r border-gray-200`}
+        className={`fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ${
+          isMobile ? (sidebarOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'
+        } ${sidebarCollapsed ? 'w-16' : 'w-64'} border-r border-gray-200 bg-white`}
       >
         {/* Company Logo */}
-        <div className="flex items-center h-16 border-b border-gray-200 pl-6">
+        <div className="flex h-16 items-center border-b border-gray-200 pl-6">
           {!sidebarCollapsed ? (
             <Link className="flex items-center space-x-3" to="/">
-              <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-blue-700">
                 <Briefcase className="h-5 w-5 text-white" />
               </div>
-              <span className="text-gray-900 font-bold text-xl">JobPortal</span>
+              <span className="text-xl font-bold text-gray-900">JobPortal</span>
             </Link>
           ) : (
-            <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-700">
               <Building2 className="h-5 w-5 text-white" />
             </div>
           )}
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-2">
+        <nav className="space-y-2 p-4">
           {NAVIGATION_MENU.map((item) => (
             <NavigationItem
               key={item.id}
@@ -124,12 +114,12 @@ const DashboardLayout = ({ activeMenu, children }) => {
         </nav>
 
         {/* Logout */}
-        <div className="absolute bottom-4 left-4 right-4">
+        <div className="absolute right-4 bottom-4 left-4">
           <button
-            className="w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
+            className="flex w-full items-center rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
             onClick={logout}
           >
-            <LogOut className="w-5 h-5 flex-shrink-0 text-gray-500" />
+            <LogOut className="h-5 w-5 flex-shrink-0 text-gray-500" />
             {!sidebarCollapsed && <span className="ml-3₹">Logout</span>}
           </button>
         </div>
@@ -138,37 +128,35 @@ const DashboardLayout = ({ activeMenu, children }) => {
       {/* Mobile overlay */}
       {isMobile && sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-25 z-40 backdrop-blur-sm"
+          className="bg-opacity-25 fixed inset-0 z-40 bg-black backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}
 
       {/* Main content */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          isMobile ? "ml-0" : sidebarCollapsed ? "ml-16" : "ml-64"
+        className={`flex flex-1 flex-col transition-all duration-300 ${
+          isMobile ? 'ml-0' : sidebarCollapsed ? 'ml-16' : 'ml-64'
         }`}
       >
         {/* Top navbar */}
-        <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 h-16 flex items-center justify-between px-6 sticky top-0 z-300">
+        <header className="sticky top-0 z-300 flex h-16 items-center justify-between border-b border-gray-200 bg-white/80 px-6 backdrop-blur-sm">
           <div className="flex items-center space-x-4">
             {isMobile && (
               <button
                 onClick={toggleSidebar}
-                className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200"
+                className="rounded-xl p-2 transition-colors duration-200 hover:bg-gray-100"
               >
                 {sidebarOpen ? (
-                  <X className="w-5 h-5 text-gray-600" />
+                  <X className="h-5 w-5 text-gray-600" />
                 ) : (
-                  <Menu className="w-5 h-5 text-gray-600" />
+                  <Menu className="h-5 w-5 text-gray-600" />
                 )}
               </button>
             )}
             <div>
-              <h1 className="text-base font-semibold text-gray-900">
-                Welcome back!
-              </h1>
-              <p className="text-sm text-gray-500 hidden sm:block">
+              <h1 className="text-base font-semibold text-gray-900">Welcome back!</h1>
+              <p className="hidden text-sm text-gray-500 sm:block">
                 Here's what's happening with your jobs today.
               </p>
             </div>
@@ -182,10 +170,10 @@ const DashboardLayout = ({ activeMenu, children }) => {
                 e.stopPropagation();
                 setProfileDropdownOpen(!profileDropdownOpen);
               }}
-              avatar={user?.avatar || ""}
-              companyName={user?.name || ""}
-              email={user?.email || ""}
-              role={user?.role || "employer"}
+              avatar={user?.avatar || ''}
+              companyName={user?.name || ''}
+              email={user?.email || ''}
+              role={user?.role || 'employer'}
               onLogout={logout}
             />
           </div>

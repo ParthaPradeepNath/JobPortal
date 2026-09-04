@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -9,7 +9,7 @@ const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within a AuthProvider");
+    throw new Error('useAuth must be used within a AuthProvider');
   }
   return context;
 };
@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const userStr = localStorage.getItem("user");
+      const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
 
       if (token && userStr) {
         const userData = JSON.parse(userStr);
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error("Auth check failed", error);
+      console.error('Auth check failed', error);
       logout();
     } finally {
       setLoading(false);
@@ -43,26 +43,26 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = (userData, token) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(userData));
 
     setUser(userData);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
 
     setUser(null);
     setIsAuthenticated(false);
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   const updateUser = (updateUserData) => {
     const newUserData = { ...user, ...updateUserData };
-    localStorage.setItem("user", JSON.stringify(newUserData));
+    localStorage.setItem('user', JSON.stringify(newUserData));
     setUser(newUserData);
   };
 

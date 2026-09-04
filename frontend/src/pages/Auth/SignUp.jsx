@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   User,
   Mail,
@@ -13,24 +13,20 @@ import {
   Loader,
   AlertCircle,
   CheckCircle,
-} from "lucide-react";
-import {
-  validateAvatar,
-  validateEmail,
-  validatePassword,
-} from "../../utils/helper";
-import uploadImage from "../../utils/uploadImage";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_PATHS } from "../../utils/apiPaths";
-import { useAuth } from "../../context/AuthContext";
+} from 'lucide-react';
+import { validateAvatar, validateEmail, validatePassword } from '../../utils/helper';
+import uploadImage from '../../utils/uploadImage';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { useAuth } from '../../context/AuthContext';
 
 const SignUp = () => {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    role: "",
+    fullName: '',
+    email: '',
+    password: '',
+    role: '',
     avatar: null,
   });
 
@@ -59,7 +55,7 @@ const SignUp = () => {
     if (formState.errors.role) {
       setFormState((prev) => ({
         ...prev,
-        errors: { ...prev.errors, role: "" },
+        errors: { ...prev.errors, role: '' },
       }));
     }
   };
@@ -84,7 +80,7 @@ const SignUp = () => {
         setFormState((prev) => ({
           ...prev,
           avatarPreview: e.target.result,
-          errors: { ...prev.errors, avatar: "" },
+          errors: { ...prev.errors, avatar: '' },
         }));
       };
       reader.readAsDataURL(file);
@@ -93,11 +89,11 @@ const SignUp = () => {
 
   const validateForm = () => {
     const errors = {
-      fullName: !formData.fullName ? "Enter full Name" : "",
+      fullName: !formData.fullName ? 'Enter full Name' : '',
       email: validateEmail(formData.email),
       password: validatePassword(formData.password),
-      role: !formData.role ? "Pleasr select your role" : "",
-      avatar: "",
+      role: !formData.role ? 'Pleasr select your role' : '',
+      avatar: '',
     };
 
     // Remove empty errors
@@ -124,19 +120,19 @@ const SignUp = () => {
 
     try {
       // Create user
-      let avatarUrl = "";
+      let avatarUrl = '';
 
       // Upload image if present
       if (formData.avatar) {
         const imgUploadRes = await uploadImage(formData.avatar);
-        avatarUrl = imgUploadRes.imageUrl || "";
+        avatarUrl = imgUploadRes.imageUrl || '';
       }
 
       const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         name: formData.fullName,
         email: formData.email,
         password: formData.password,
-        avatar: avatarUrl || "",
+        avatar: avatarUrl || '',
         role: formData.role,
       });
 
@@ -156,19 +152,17 @@ const SignUp = () => {
         // Redirect based on role
         setTimeout(() => {
           window.location.href =
-            formData.role === "employer" ? "/employer-dashboard" : "/find-jobs";
+            formData.role === 'employer' ? '/employer-dashboard' : '/find-jobs';
         }, 2000);
       }
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
 
       setFormState((prev) => ({
         ...prev,
         loading: false,
         errors: {
-          submit:
-            error.response?.data?.message ||
-            "Registration failed. Please try again.",
+          submit: error.response?.data?.message || 'Registration failed. Please try again.',
         },
       }));
     }
@@ -176,40 +170,34 @@ const SignUp = () => {
 
   if (formState.success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center"
+          className="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-lg"
         >
-          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Account Created!
-          </h2>
-          <p className="text-gray-600 mb-4">
+          <CheckCircle className="mx-auto mb-4 h-16 w-16 text-green-500" />
+          <h2 className="mb-2 text-2xl font-bold text-gray-900">Account Created!</h2>
+          <p className="mb-4 text-gray-600">
             Welcome to JobPortal! Your account has been successfully created.
           </p>
-          <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto" />
-          <p className="text-sm text-gray-500 mt-2">
-            Redirecting to your dashboard...
-          </p>
+          <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+          <p className="mt-2 text-sm text-gray-500">Redirecting to your dashboard...</p>
         </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full"
+        className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg"
       >
-        <div className="text-center mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Create Account
-          </h2>
+        <div className="mb-8 text-center">
+          <h2 className="mb-2 text-xl font-bold text-gray-900">Create Account</h2>
           <p className="text-sm text-gray-600">
             Join thousands of professionals finding their dream jobs
           </p>
@@ -218,27 +206,23 @@ const SignUp = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Full Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Full Name *
-            </label>
+            <label className="mb-2 block text-sm font-medium text-gray-700">Full Name *</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <User className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               <input
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  formState.errors.fullName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full rounded-lg border py-3 pr-4 pl-10 ${
+                  formState.errors.fullName ? 'border-red-500' : 'border-gray-300'
+                } transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500`}
                 placeholder="Enter your full name"
               />
             </div>
             {formState.errors.fullName && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
+              <p className="mt-1 flex items-center text-sm text-red-500">
+                <AlertCircle className="mr-1 h-4 w-4" />
                 {formState.errors.fullName}
               </p>
             )}
@@ -246,25 +230,23 @@ const SignUp = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address *
-            </label>
+            <label className="mb-2 block text-sm font-medium text-gray-700">Email Address *</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  formState.errors.email ? "border-red-500" : "border-gray-300"
-                } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full rounded-lg border py-3 pr-4 pl-10 ${
+                  formState.errors.email ? 'border-red-500' : 'border-gray-300'
+                } transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500`}
                 placeholder="Enter your email"
               />
             </div>
             {formState.errors.email && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
+              <p className="mt-1 flex items-center text-sm text-red-500">
+                <AlertCircle className="mr-1 h-4 w-4" />
                 {formState.errors.email}
               </p>
             )}
@@ -272,21 +254,17 @@ const SignUp = () => {
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password *
-            </label>
+            <label className="mb-2 block text-sm font-medium text-gray-700">Password *</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               <input
-                type={formState.showPassword ? "text" : "password"}
+                type={formState.showPassword ? 'text' : 'password'}
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-12 py-3 rounded-lg border ${
-                  formState.errors.password
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full rounded-lg border py-3 pr-12 pl-10 ${
+                  formState.errors.password ? 'border-red-500' : 'border-gray-300'
+                } transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500`}
                 placeholder="Create a strong password"
               />
               <button
@@ -297,18 +275,18 @@ const SignUp = () => {
                     showPassword: !prev.showPassword,
                   }))
                 }
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute top-1/2 right-3 -translate-y-1/2 transform text-gray-400 hover:text-gray-600"
               >
                 {formState.showPassword ? (
-                  <EyeOff className="w-5 h-5" />
+                  <EyeOff className="h-5 w-5" />
                 ) : (
-                  <Eye className="w-5 h-5" />
+                  <Eye className="h-5 w-5" />
                 )}
               </button>
             </div>
             {formState.errors.password && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
+              <p className="mt-1 flex items-center text-sm text-red-500">
+                <AlertCircle className="mr-1 h-4 w-4" />
                 {formState.errors.password}
               </p>
             )}
@@ -316,19 +294,19 @@ const SignUp = () => {
 
           {/* Avatar Upload */}
           <div>
-            <label className="lock text-sm font-medium text-gray-700 mb-2">
+            <label className="lock mb-2 text-sm font-medium text-gray-700">
               Profile Picture (optional)
             </label>
             <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+              <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-gray-100">
                 {formState.avatarPreview ? (
                   <img
                     src={formState.avatarPreview}
                     alt="Avatar preview"
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 ) : (
-                  <User className="w-12 h-12 text-gray-400" />
+                  <User className="h-12 w-12 text-gray-400" />
                 )}
               </div>
               <div className="flex-1">
@@ -341,17 +319,17 @@ const SignUp = () => {
                 />
                 <label
                   htmlFor="avatar"
-                  className="cursor-pointer bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                  className="flex cursor-pointer items-center space-x-2 rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100"
                 >
-                  <Upload className="w-4 h-4" />
+                  <Upload className="h-4 w-4" />
                   <span>Upload Photo</span>
                 </label>
-                <p className="text-xs text-gray-500 mt-1">JPG, PNG up to 5MB</p>
+                <p className="mt-1 text-xs text-gray-500">JPG, PNG up to 5MB</p>
               </div>
             </div>
             {formState.errors.avatar && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
+              <p className="mt-1 flex items-center text-sm text-red-500">
+                <AlertCircle className="mr-1 h-4 w-4" />
                 {formState.errors.avatar}
               </p>
             )}
@@ -359,42 +337,38 @@ const SignUp = () => {
 
           {/* Role Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              I am a *
-            </label>
+            <label className="mb-3 block text-sm font-medium text-gray-700">I am a *</label>
             <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
-                onClick={() => handleRoleChange("jobseeker")}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  formData.role === "jobseeker"
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
-                    : "border-gray-200 hover:border-gray-300"
+                onClick={() => handleRoleChange('jobseeker')}
+                className={`rounded-lg border-2 p-4 transition-all ${
+                  formData.role === 'jobseeker'
+                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <UserCheck className="w-8 h-8 mx-auto mb-2" />
+                <UserCheck className="mx-auto mb-2 h-8 w-8" />
                 <div className="font-medium">JobSeeker</div>
-                <div className="text-xs text-gray-500">
-                  Looking for opportunities
-                </div>
+                <div className="text-xs text-gray-500">Looking for opportunities</div>
               </button>
               <button
                 type="button"
-                onClick={() => handleRoleChange("employer")}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  formData.role === "employer"
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
-                    : "border-gray-200 hover:border-gray-300"
+                onClick={() => handleRoleChange('employer')}
+                className={`rounded-lg border-2 p-4 transition-all ${
+                  formData.role === 'employer'
+                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <Building2 className="w-8 h-8 mx-auto mb-2" />
+                <Building2 className="mx-auto mb-2 h-8 w-8" />
                 <div className="font-medium">Employer</div>
                 <div className="text-xs text-gray-500">Hiring talent</div>
               </button>
             </div>
             {formState.errors.role && (
-              <p className="text-red-500 text-sm mt-2 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
+              <p className="mt-2 flex items-center text-sm text-red-500">
+                <AlertCircle className="mr-1 h-4 w-4" />
                 {formState.errors.role}
               </p>
             )}
@@ -402,9 +376,9 @@ const SignUp = () => {
 
           {/* Submit Error */}
           {formState.errors.submit && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-red-700 text-sm flex items-center">
-                <AlertCircle className="w-4 h-4 mr-2" />
+            <div className="rounded-lg border border-red-200 bg-red-50 p-3">
+              <p className="flex items-center text-sm text-red-700">
+                <AlertCircle className="mr-2 h-4 w-4" />
                 {formState.errors.submit}
               </p>
             </div>
@@ -414,11 +388,11 @@ const SignUp = () => {
           <button
             type="submit"
             disabled={formState.loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 diabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="diabled:opacity-50 flex w-full items-center justify-center space-x-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 py-3 font-semibold text-white transition-all duration-300 hover:from-blue-700 hover:to-purple-700 disabled:cursor-not-allowed"
           >
             {formState.loading ? (
               <>
-                <Loader className="w-5 h-5 animate-spin" />
+                <Loader className="h-5 w-5 animate-spin" />
                 <span>Creating Account...</span>
               </>
             ) : (
@@ -429,11 +403,8 @@ const SignUp = () => {
           {/* Login Link */}
           <div className="text-center">
             <p className="text-gray-600">
-              Already have an account?{" "}
-              <a
-                href="/login"
-                className="text-blue-600 hover:text-blue-700 font-medium"
-              >
+              Already have an account?{' '}
+              <a href="/login" className="font-medium text-blue-600 hover:text-blue-700">
                 Sign in here
               </a>
             </p>

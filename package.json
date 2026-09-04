@@ -13,6 +13,8 @@
     "dev:backend": "pnpm --dir backend dev",
     "build": "pnpm --dir frontend build",
     "lint": "pnpm --dir frontend lint",
+    "format": "pnpm --dir frontend format && pnpm --dir backend format",
+    "format:check": "pnpm --dir frontend format:check && pnpm --dir backend format:check",
     "install:all": "pnpm --dir frontend install && pnpm --dir backend install"
   }
 }

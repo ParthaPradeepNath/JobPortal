@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { Building2, Mail, Edit3 } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_PATHS } from "../../utils/apiPaths";
-import toast from "react-hot-toast";
-import uploadImage from "../../utils/uploadImage";
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import EditProfileDetails from "./EditProfileDetails";
+import { useState } from 'react';
+import { Building2, Mail, Edit3 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import toast from 'react-hot-toast';
+import uploadImage from '../../utils/uploadImage';
+import DashboardLayout from '../../components/layout/DashboardLayout';
+import EditProfileDetails from './EditProfileDetails';
 
 const EmployerProfilePage = () => {
   const { user, updateUser } = useAuth();
 
   const [profileData, setProfileData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    avatar: user?.avatar || "",
-    companyName: user?.companyName || "",
-    companyDescription: user?.companyDescription || "",
-    companyLogo: user?.companyLogo || "",
+    name: user?.name || '',
+    email: user?.email || '',
+    avatar: user?.avatar || '',
+    companyName: user?.companyName || '',
+    companyDescription: user?.companyDescription || '',
+    companyLogo: user?.companyLogo || '',
   });
 
   const [editMode, setEditMode] = useState(false);
@@ -37,13 +37,13 @@ const EmployerProfilePage = () => {
 
     try {
       const imgUploadRes = await uploadImage(file);
-      const avatarUrl = imgUploadRes.imageUrl || "";
+      const avatarUrl = imgUploadRes.imageUrl || '';
 
       // Update form data with new image URL
-      const field = type === "avatar" ? "avatar" : "companyLogo";
+      const field = type === 'avatar' ? 'avatar' : 'companyLogo';
       handleInputChange(field, avatarUrl);
     } catch (error) {
-      console.error("Image upload failed:", error);
+      console.error('Image upload failed:', error);
     } finally {
       setUploading((prev) => ({ ...prev, [type]: false }));
     }
@@ -54,7 +54,7 @@ const EmployerProfilePage = () => {
     if (file) {
       // Create preview URL
       const previewUrl = URL.createObjectURL(file);
-      const field = type === "avatar" ? "avatar" : "companyLogo";
+      const field = type === 'avatar' ? 'avatar' : 'companyLogo';
       handleInputChange(field, previewUrl);
 
       // Upload image
@@ -66,22 +66,19 @@ const EmployerProfilePage = () => {
     setSaving(true);
 
     try {
-      const response = await axiosInstance.put(
-        API_PATHS.AUTH.UPDATE_PROFILE,
-        formData
-      );
+      const response = await axiosInstance.put(API_PATHS.AUTH.UPDATE_PROFILE, formData);
 
       if (response.status !== 200) {
-        toast.error("Failed to update profile");
+        toast.error('Failed to update profile');
         return;
       }
-      toast.success("Profile Details updated successfully!");
+      toast.success('Profile Details updated successfully!');
       // Update profile data and exit edit mode
       setProfileData({ ...formData });
       updateUser({ ...formData });
       setEditMode(false);
     } catch (error) {
-      console.error("Profile update failed:", error);
+      console.error('Profile update failed:', error);
     } finally {
       setSaving(false);
     }
@@ -108,17 +105,15 @@ const EmployerProfilePage = () => {
 
   return (
     <DashboardLayout activeMenu="company-profile">
-      <div className="min-h-screen bg-gray-50 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="min-h-screen bg-gray-50 px-4 py-8">
+        <div className="mx-auto max-w-4xl">
+          <div className="overflow-hidden rounded-xl bg-white shadow-lg">
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-6 flex justify-between items-center">
-              <h1 className="text-xl font-medium text-white">
-                Employer Profile
-              </h1>
+            <div className="flex items-center justify-between bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-6">
+              <h1 className="text-xl font-medium text-white">Employer Profile</h1>
               <button
                 onClick={() => setEditMode(true)}
-                className="bg-white/10 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                className="hover:bg-opacity-30 flex items-center space-x-2 rounded-lg bg-white/10 px-4 py-2 text-white transition-colors"
               >
                 <Edit3 className="h-4 w-4" />
                 <span>Edit Profile</span>
@@ -127,10 +122,10 @@ const EmployerProfilePage = () => {
 
             {/* Profile Content */}
             <div className="p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                 {/* Personal Information */}
                 <div className="space-y-6">
-                  <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                  <h2 className="border-b border-gray-200 pb-2 text-lg font-semibold text-gray-800">
                     Personal Information
                   </h2>
 
@@ -139,14 +134,12 @@ const EmployerProfilePage = () => {
                     <img
                       src={profileData.avatar}
                       alt="avatar"
-                      className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
+                      className="h-20 w-20 rounded-full border-4 border-blue-50 object-cover"
                     />
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800">
-                        {profileData.name}
-                      </h3>
-                      <div className="flex items-center text-sm text-gray-600 mt-1">
-                        <Mail className="h-4 w-4 mr-2" />
+                      <h3 className="text-lg font-semibold text-gray-800">{profileData.name}</h3>
+                      <div className="mt-1 flex items-center text-sm text-gray-600">
+                        <Mail className="mr-2 h-4 w-4" />
                         <span>{profileData.email}</span>
                       </div>
                     </div>
@@ -155,7 +148,7 @@ const EmployerProfilePage = () => {
 
                 {/* Company Information */}
                 <div className="space-y-6">
-                  <h2 className="text-lg font-semibold text-gray-800 borer-b border-gray-200">
+                  <h2 className="borer-b border-gray-200 text-lg font-semibold text-gray-800">
                     Company Information
                   </h2>
 
@@ -164,14 +157,14 @@ const EmployerProfilePage = () => {
                     <img
                       src={profileData.companyLogo}
                       alt="company logo"
-                      className="w-20 h-20 rounded-lg object-cover border-4 border-blue-50"
+                      className="h-20 w-20 rounded-lg border-4 border-blue-50 object-cover"
                     />
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">
                         {profileData.companyName}
                       </h3>
-                      <div className="flex items-center text-sm text-gray-600 mt-1">
-                        <Building2 className="w-4 h-4 mr-2" />
+                      <div className="mt-1 flex items-center text-sm text-gray-600">
+                        <Building2 className="mr-2 h-4 w-4" />
                         <span>Company</span>
                       </div>
                     </div>
@@ -181,10 +174,10 @@ const EmployerProfilePage = () => {
 
               {/* Company Description */}
               <div className="mt-8">
-                <h2 className="text-lg font-semibold text-gray-800 borer-b border-gray-200 pb-2 mb-1">
+                <h2 className="borer-b mb-1 border-gray-200 pb-2 text-lg font-semibold text-gray-800">
                   About Company
                 </h2>
-                <p className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-6 rounded-lg">
+                <p className="rounded-lg bg-gray-50 p-6 text-sm leading-relaxed text-gray-700">
                   {profileData.companyDescription}
                 </p>
               </div>

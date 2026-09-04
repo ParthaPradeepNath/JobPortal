@@ -1,13 +1,11 @@
-import Application from "../models/Application.js";
-import Job from "../models/Job.js";
+import Application from '../models/Application.js';
+import Job from '../models/Job.js';
 
 // @desc    Apply to a job
 export const applyToJob = async (req, res) => {
   try {
-    if (req.user.role !== "jobseeker") {
-      return res
-        .status(403)
-        .json({ message: "Only jobseekers can apply to jobs" });
+    if (req.user.role !== 'jobseeker') {
+      return res.status(403).json({ message: 'Only jobseekers can apply to jobs' });
     }
 
     const existing = await Application.findOne({
@@ -15,7 +13,7 @@ export const applyToJob = async (req, res) => {
       applicant: req.user._id,
     });
     if (existing) {
-      return res.status(400).json({ message: "Already applied to this job" });
+      return res.status(400).json({ message: 'Already applied to this job' });
     }
 
     const application = await Application.create({
@@ -34,8 +32,8 @@ export const applyToJob = async (req, res) => {
 export const getMyApplications = async (req, res) => {
   try {
     const apps = await Application.find({ applicant: req.user._id })
-      .populate("job", "title location category type")
-      .populate("applicant", "name email avatar resume")
+      .populate('job', 'title location category type')
+      .populate('applicant', 'name email avatar resume')
       .sort({ createdAt: -1 });
     res.json(apps);
   } catch (err) {
@@ -49,14 +47,12 @@ export const getApplicationForJob = async (req, res) => {
     const job = await Job.findById(req.params.jobId);
 
     if (!job || job.company.toString() !== req.user._id.toString()) {
-      return res
-        .status(403)
-        .json({ message: "Not authorized to view applicants" });
+      return res.status(403).json({ message: 'Not authorized to view applicants' });
     }
 
     const applications = await Application.find({ job: req.params.jobId })
-      .populate("job", "title location category type")
-      .populate("applicant", "name email avatar resume");
+      .populate('job', 'title location category type')
+      .populate('applicant', 'name email avatar resume');
 
     res.json(applications);
   } catch (err) {
@@ -68,22 +64,17 @@ export const getApplicationForJob = async (req, res) => {
 export const getApplicationById = async (req, res) => {
   try {
     const app = await Application.findById(req.params.id)
-      .populate("job", "title")
-      .populate("applicant", "name email avatar resume");
+      .populate('job', 'title')
+      .populate('applicant', 'name email avatar resume');
 
-    if (!app)
-      return res
-        .status(404)
-        .json({ message: "Application not found.", id: req.params.id });
+    if (!app) return res.status(404).json({ message: 'Application not found.', id: req.params.id });
 
     const isOwner =
       app.applicant._id.toString() === req.user._id.toString() ||
       app.job.company.toString() === req.user._id.toString();
 
     if (!isOwner) {
-      return res
-        .status(403)
-        .json({ message: "Not authorized to view this application." });
+      return res.status(403).json({ message: 'Not authorized to view this application.' });
     }
 
     res.json(app);
@@ -96,18 +87,16 @@ export const getApplicationById = async (req, res) => {
 export const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    const app = await Application.findById(req.params.id).populate("job");
+    const app = await Application.findById(req.params.id).populate('job');
 
     if (!app || app.job.company.toString() !== req.user._id.toString()) {
-      return res
-        .status(403)
-        .json({ message: "Not authorized to update this application." });
+      return res.status(403).json({ message: 'Not authorized to update this application.' });
     }
 
     app.status = status;
     await app.save();
 
-    res.json({ message: "Application status updated successfully", status });
+    res.json({ message: 'Application status updated successfully', status });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

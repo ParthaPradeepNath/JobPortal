@@ -19,11 +19,11 @@ pnpm dev
 
 ## Scripts
 
-| Command        | Description            |
-|----------------|------------------------|
-| `pnpm dev`     | Start Vite dev server  |
-| `pnpm build`   | Production build       |
-| `pnpm lint`    | Run ESLint             |
+| Command        | Description              |
+| -------------- | ------------------------ |
+| `pnpm dev`     | Start Vite dev server    |
+| `pnpm build`   | Production build         |
+| `pnpm lint`    | Run ESLint               |
 | `pnpm preview` | Preview production build |
 
 ## Projects Structure
@@ -43,8 +43,8 @@ src/
 
 ## Environment Variables
 
-| Variable             | Default               | Description                |
-|----------------------|-----------------------|----------------------------|
-| `VITE_API_BASE_URL`  | `http://localhost:8000` | Base URL of the backend API |
+| Variable            | Default                 | Description                 |
+| ------------------- | ----------------------- | --------------------------- |
+| `VITE_API_BASE_URL` | `http://localhost:8000` | Base URL of the backend API |
 
 See the root [`README.md`](../README.md) for the full project documentation.

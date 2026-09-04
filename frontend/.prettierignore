@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+build
+coverage
+uploads
+*.local
+.env
+.env.*
+!.env.example
+pnpm-lock.yaml
+package-lock.json

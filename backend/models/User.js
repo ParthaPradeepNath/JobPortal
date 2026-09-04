@@ -1,24 +1,25 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     role: {
-        type: String,
-        required: true,
-        enum: ["employer", "jobseeker"],
+      type: String,
+      required: true,
+      enum: ['employer', 'jobseeker'],
     },
     avatar: String,
     resume: String,
@@ -27,19 +28,20 @@ const userSchema = new mongoose.Schema({
     companyName: String,
     companyDescription: String,
     companyLogo: String,
-
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 // Encrypt password before saving to database
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
 // Match entered password
 userSchema.methods.matchPassword = function (enteredPassword) {
-    return bcrypt.compare(enteredPassword, this.password);
-}
+  return bcrypt.compare(enteredPassword, this.password);
+};
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);

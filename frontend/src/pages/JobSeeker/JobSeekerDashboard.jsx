@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { Search, MapPin, SlidersHorizontal, Briefcase } from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_PATHS } from "../../utils/apiPaths";
-import { useAuth } from "../../context/AuthContext";
-import JobSeekerLayout from "../../components/layout/JobSeekerLayout";
-import JobCard from "../../components/Cards/JobCard";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import { CATEGORIES, JOB_TYPES } from "../../utils/data";
+import { useState, useEffect } from 'react';
+import { Search, MapPin, SlidersHorizontal, Briefcase } from 'lucide-react';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { useAuth } from '../../context/AuthContext';
+import JobSeekerLayout from '../../components/layout/JobSeekerLayout';
+import JobCard from '../../components/Cards/JobCard';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import { CATEGORIES, JOB_TYPES } from '../../utils/data';
 
 const JobSeekerDashboard = () => {
   const { user } = useAuth();
@@ -15,10 +15,10 @@ const JobSeekerDashboard = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const [filters, setFilters] = useState({
-    keyword: "",
-    location: "",
-    category: "",
-    type: "",
+    keyword: '',
+    location: '',
+    category: '',
+    type: '',
   });
 
   const fetchJobs = async () => {
@@ -36,7 +36,7 @@ const JobSeekerDashboard = () => {
       });
       setJobs(response.data);
     } catch (err) {
-      console.error("Failed to fetch jobs", err);
+      console.error('Failed to fetch jobs', err);
     } finally {
       setLoading(false);
     }
@@ -57,52 +57,48 @@ const JobSeekerDashboard = () => {
   };
 
   const handleReset = () => {
-    setFilters({ keyword: "", location: "", category: "", type: "" });
+    setFilters({ keyword: '', location: '', category: '', type: '' });
     setTimeout(fetchJobs, 0);
   };
 
   return (
     <JobSeekerLayout active="find-jobs">
       {/* Hero search section */}
-      <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-2xl p-6 sm:p-10 mb-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+      <div className="relative mb-8 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 p-6 sm:p-10">
+        <div className="absolute top-0 right-0 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
         <div className="relative z-10">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Find Your Dream Job
-          </h1>
-          <p className="text-blue-100 mb-6">
+          <h1 className="mb-2 text-2xl font-bold text-white sm:text-3xl">Find Your Dream Job</h1>
+          <p className="mb-6 text-blue-100">
             Browse opportunities from top companies and apply in one click
           </p>
 
           <form
             onSubmit={handleSearch}
-            className="bg-white rounded-xl p-2 flex flex-col md:flex-row gap-2 shadow-lg"
+            className="flex flex-col gap-2 rounded-xl bg-white p-2 shadow-lg md:flex-row"
           >
-            <div className="flex-1 flex items-center gap-2 px-3">
+            <div className="flex flex-1 items-center gap-2 px-3">
               <Search className="h-5 w-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Job title, keyword..."
                 value={filters.keyword}
-                onChange={(e) => handleFilterChange("keyword", e.target.value)}
-                className="w-full py-2 bg-transparent outline-none text-gray-800 placeholder-gray-400"
+                onChange={(e) => handleFilterChange('keyword', e.target.value)}
+                className="w-full bg-transparent py-2 text-gray-800 placeholder-gray-400 outline-none"
               />
             </div>
-            <div className="flex-1 flex items-center gap-2 px-3 md:border-l md:border-gray-200">
+            <div className="flex flex-1 items-center gap-2 px-3 md:border-l md:border-gray-200">
               <MapPin className="h-5 w-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Location..."
                 value={filters.location}
-                onChange={(e) =>
-                  handleFilterChange("location", e.target.value)
-                }
-                className="w-full py-2 bg-transparent outline-none text-gray-800 placeholder-gray-400"
+                onChange={(e) => handleFilterChange('location', e.target.value)}
+                className="w-full bg-transparent py-2 text-gray-800 placeholder-gray-400 outline-none"
               />
             </div>
             <button
               type="submit"
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 font-medium text-white transition-opacity hover:opacity-90"
             >
               Search
             </button>
@@ -111,31 +107,27 @@ const JobSeekerDashboard = () => {
       </div>
 
       {/* Filter bar */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <button
           onClick={() => setShowFilters((s) => !s)}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+          className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
         >
           <SlidersHorizontal className="h-4 w-4" />
           Filters
         </button>
         <p className="text-sm text-gray-600">
-          {jobs.length} job{jobs.length !== 1 ? "s" : ""} found
+          {jobs.length} job{jobs.length !== 1 ? 's' : ''} found
         </p>
       </div>
 
       {showFilters && (
-        <div className="bg-white rounded-2xl border border-gray-200 p-4 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="mb-6 grid grid-cols-1 gap-4 rounded-2xl border border-gray-200 bg-white p-4 sm:grid-cols-2">
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">
-              Category
-            </label>
+            <label className="mb-1 block text-xs font-medium text-gray-500">Category</label>
             <select
               value={filters.category}
-              onChange={(e) =>
-                handleFilterChange("category", e.target.value)
-              }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => handleFilterChange('category', e.target.value)}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
               <option value="">All Categories</option>
               {CATEGORIES.map((c) => (
@@ -146,13 +138,11 @@ const JobSeekerDashboard = () => {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">
-              Job Type
-            </label>
+            <label className="mb-1 block text-xs font-medium text-gray-500">Job Type</label>
             <select
               value={filters.type}
-              onChange={(e) => handleFilterChange("type", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => handleFilterChange('type', e.target.value)}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
               <option value="">All Types</option>
               {JOB_TYPES.map((t) => (
@@ -162,10 +152,10 @@ const JobSeekerDashboard = () => {
               ))}
             </select>
           </div>
-          <div className="sm:col-span-2 flex justify-end">
+          <div className="flex justify-end sm:col-span-2">
             <button
               onClick={handleReset}
-              className="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
             >
               Reset Filters
             </button>
@@ -177,19 +167,15 @@ const JobSeekerDashboard = () => {
       {loading ? (
         <LoadingSpinner />
       ) : jobs.length === 0 ? (
-        <div className="text-center py-20">
-          <div className="h-20 w-20 mx-auto bg-white rounded-2xl shadow-sm flex items-center justify-center mb-4">
+        <div className="py-20 text-center">
+          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm">
             <Briefcase className="h-10 w-10 text-gray-300" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-1">
-            No jobs found
-          </h3>
-          <p className="text-gray-500">
-            Try adjusting your search or filter criteria
-          </p>
+          <h3 className="mb-1 text-lg font-medium text-gray-900">No jobs found</h3>
+          <p className="text-gray-500">Try adjusting your search or filter criteria</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {jobs.map((job) => (
             <JobCard key={job._id} job={job} onAction={fetchJobs} />
           ))}

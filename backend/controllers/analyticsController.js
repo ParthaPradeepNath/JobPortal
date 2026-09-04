@@ -1,5 +1,5 @@
-import Job from "../models/Job.js";
-import Application from "../models/Application.js";
+import Job from '../models/Job.js';
+import Application from '../models/Application.js';
 
 const getTrend = (current, previous) => {
   if (previous === 0) return current > 0 ? 100 : 0;
@@ -7,8 +7,8 @@ const getTrend = (current, previous) => {
 
 export const getEmployerAnalytics = async (req, res) => {
   try {
-    if (req.user.role !== "employer") {
-      return res.status(403).json({ message: "Access Denied" });
+    if (req.user.role !== 'employer') {
+      return res.status(403).json({ message: 'Access Denied' });
     }
 
     const companyId = req.user._id;
@@ -24,7 +24,7 @@ export const getEmployerAnalytics = async (req, res) => {
       company: companyId,
       isClosed: false,
     });
-    const jobs = await Job.find({ company: companyId }).select("_id").lean();
+    const jobs = await Job.find({ company: companyId }).select('_id').lean();
     const jobIds = jobs.map((job) => job._id);
 
     const totalApplications = await Application.countDocuments({
@@ -32,7 +32,7 @@ export const getEmployerAnalytics = async (req, res) => {
     });
     const totalHired = await Application.countDocuments({
       job: { $in: jobIds },
-      status: "Accepted",
+      status: 'Accepted',
     });
 
     // ==== TRENDS ====
@@ -66,13 +66,13 @@ export const getEmployerAnalytics = async (req, res) => {
     // Hired Applicants trend
     const hiredLast7 = await Application.countDocuments({
       job: { $in: jobIds },
-      status: "Accepted",
+      status: 'Accepted',
       createdAt: { $gte: last7Days, $lt: now },
     });
 
     const hiredPrev7 = await Application.countDocuments({
       job: { $in: jobIds },
-      status: "Accepted",
+      status: 'Accepted',
       createdAt: { $gte: prev7Days, $lt: last7Days },
     });
 
@@ -82,13 +82,13 @@ export const getEmployerAnalytics = async (req, res) => {
     const recentJobs = await Job.find({ company: companyId })
       .sort({ createdAt: -1 })
       .limit(5)
-      .select("title location type createdAt isClosed");
+      .select('title location type createdAt isClosed');
 
     const recentApplications = await Application.find({ job: { $in: jobIds } })
       .sort({ createdAt: -1 })
       .limit(5)
-      .populate("applicant", "name email avatar")
-      .populate("job", "title");
+      .populate('applicant', 'name email avatar')
+      .populate('job', 'title');
 
     res.json({
       counts: {
@@ -107,8 +107,6 @@ export const getEmployerAnalytics = async (req, res) => {
       },
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch analytics", error: err.message });
+    res.status(500).json({ message: 'Failed to fetch analytics', error: err.message });
   }
 };

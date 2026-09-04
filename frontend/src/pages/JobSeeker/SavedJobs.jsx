@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { Bookmark, Building2, Briefcase } from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_PATHS } from "../../utils/apiPaths";
-import JobSeekerLayout from "../../components/layout/JobSeekerLayout";
-import JobCard from "../../components/Cards/JobCard";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import { useState, useEffect } from 'react';
+import { Bookmark, Building2, Briefcase } from 'lucide-react';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import JobSeekerLayout from '../../components/layout/JobSeekerLayout';
+import JobCard from '../../components/Cards/JobCard';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const SavedJobs = () => {
   const [savedJobs, setSavedJobs] = useState([]);
@@ -21,7 +21,7 @@ const SavedJobs = () => {
       }));
       setSavedJobs(saved);
     } catch (err) {
-      console.error("Failed to fetch saved jobs", err);
+      console.error('Failed to fetch saved jobs', err);
     } finally {
       setLoading(false);
     }
@@ -34,45 +34,35 @@ const SavedJobs = () => {
   return (
     <JobSeekerLayout active="saved-jobs">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+        <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900">
           <span className="flex items-center gap-2">
             <Bookmark className="h-6 w-6 text-blue-600" />
             Saved Jobs
           </span>
         </h1>
-        <p className="text-gray-600 mt-1">
-          Your bookmarked opportunities, ready when you are
-        </p>
+        <p className="mt-1 text-gray-600">Your bookmarked opportunities, ready when you are</p>
       </div>
 
       {loading ? (
         <LoadingSpinner />
       ) : savedJobs.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
-          <div className="h-20 w-20 mx-auto bg-blue-50 rounded-2xl flex items-center justify-center mb-4">
+        <div className="rounded-2xl border border-gray-100 bg-white py-20 text-center">
+          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-50">
             <Building2 className="h-10 w-10 text-blue-400" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-1">
-            No saved jobs yet
-          </h3>
-          <p className="text-gray-500">
-            Save jobs you're interested in and find them here later
-          </p>
+          <h3 className="mb-1 text-lg font-medium text-gray-900">No saved jobs yet</h3>
+          <p className="text-gray-500">Save jobs you're interested in and find them here later</p>
           <a
             href="/find-jobs"
-            className="inline-block mt-4 px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:opacity-90 transition-opacity"
+            className="mt-4 inline-block rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
             Browse Jobs
           </a>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {savedJobs.map((job) => (
-            <JobCard
-              key={job._id}
-              job={job}
-              onAction={() => setRefresh((r) => r + 1)}
-            />
+            <JobCard key={job._id} job={job} onAction={() => setRefresh((r) => r + 1)} />
           ))}
         </div>
       )}

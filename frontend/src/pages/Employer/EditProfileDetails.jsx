@@ -1,5 +1,5 @@
-import { Save, X } from "lucide-react";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import { Save, X } from 'lucide-react';
+import DashboardLayout from '../../components/layout/DashboardLayout';
 
 const EditProfileDetails = ({
   formData,
@@ -13,22 +13,20 @@ const EditProfileDetails = ({
   return (
     <DashboardLayout activeMenu="company-profile">
       {formData && (
-        <div className="min-h-screen bg-gray-50 py-8 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="min-h-screen bg-gray-50 px-4 py-8">
+          <div className="mx-auto max-w-4xl">
+            <div className="overflow-hidden rounded-xl bg-white shadow-lg">
               {/* Header */}
               <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-6">
-                <h1 className="text-lg md:text-xl font-medium text-white">
-                  Edit Profile
-                </h1>
+                <h1 className="text-lg font-medium text-white md:text-xl">Edit Profile</h1>
               </div>
 
               {/* Edit Form */}
               <div className="p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                   {/* Personal Information */}
                   <div className="space-y-6">
-                    <h2 className="text-lg font-medium text-gray-800 border-b pb-2">
+                    <h2 className="border-b pb-2 text-lg font-medium text-gray-800">
                       Personal Information
                     </h2>
 
@@ -38,11 +36,11 @@ const EditProfileDetails = ({
                         <img
                           src={formData?.avatar}
                           alt="avatar"
-                          className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
+                          className="h-20 w-20 rounded-full border-4 border-gray-200 object-cover"
                         />
                         {uploading?.avatar && (
-                          <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-                            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center rounded-full bg-black">
+                            <div className="h-6 w-6 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                           </div>
                         )}
                       </div>
@@ -52,8 +50,8 @@ const EditProfileDetails = ({
                           <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => handleImageChange(e, "avatar")}
-                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                            onChange={(e) => handleImageChange(e, 'avatar')}
+                            className="block w-full text-sm text-gray-500 transition-colors file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
                           />
                         </label>
                       </div>
@@ -61,37 +59,35 @@ const EditProfileDetails = ({
 
                     {/* Name Input */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Full Name
                       </label>
                       <input
                         type="text"
                         value={formData.name}
-                        onChange={(e) =>
-                          handleInputChange("name", e.target.value)
-                        }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        className="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter your full name"
                       />
                     </div>
 
                     {/* Email (Read-only) */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Email Address
                       </label>
                       <input
                         type="email"
                         value={formData.email}
                         disabled
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-500"
                       />
                     </div>
                   </div>
 
                   {/* Company Information */}
                   <div className="space-y-6">
-                    <h2 className="text-lg font-medium text-gray-800 border-b pb-2">
+                    <h2 className="border-b pb-2 text-lg font-medium text-gray-800">
                       Company Information
                     </h2>
 
@@ -101,11 +97,11 @@ const EditProfileDetails = ({
                         <img
                           src={formData.companyLogo}
                           alt="company logo"
-                          className="w-20 h-20 rounded-lg object-cover border-4 border-gray-200"
+                          className="h-20 w-20 rounded-lg border-4 border-gray-200 object-cover"
                         />
                         {uploading.logo && (
-                          <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
-                            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center rounded-lg bg-black">
+                            <div className="h-6 w-6 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                           </div>
                         )}
                       </div>
@@ -115,8 +111,8 @@ const EditProfileDetails = ({
                           <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => handleImageChange(e, "logo")}
-                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file: border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700hover:file:bg-green-100 transition-colors"
+                            onChange={(e) => handleImageChange(e, 'logo')}
+                            className="file: file:text-green-700hover:file:bg-green-100 block w-full border-0 text-sm text-gray-500 transition-colors file:mr-4 file:rounded-full file:bg-green-50 file:px-4 file:py-2 file:text-sm file:font-semibold"
                           />
                         </label>
                       </div>
@@ -124,35 +120,28 @@ const EditProfileDetails = ({
 
                     {/* Company Name */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Company Name
                       </label>
                       <input
                         type="text"
                         value={formData.companyName}
-                        onChange={(e) =>
-                          handleInputChange("companyName", e.target.value)
-                        }
-                        className="w-full px-4 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        onChange={(e) => handleInputChange('companyName', e.target.value)}
+                        className="w-full rounded-lg border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter company name"
                       />
                     </div>
 
                     {/* Comapany Description */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-700">
                         Company Description
                       </label>
                       <textarea
                         value={formData.companyDescription}
-                        onChange={(e) =>
-                          handleInputChange(
-                            "companyDescription",
-                            e.target.value
-                          )
-                        }
+                        onChange={(e) => handleInputChange('companyDescription', e.target.value)}
                         rows={4}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                        className="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500"
                         placeholder="Describe your company..."
                       />
                     </div>
@@ -160,25 +149,25 @@ const EditProfileDetails = ({
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex justify-end space-x-4 mt-8 pt-6 border-t">
+                <div className="mt-8 flex justify-end space-x-4 border-t pt-6">
                   <button
                     onClick={handleCancel}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                    className="flex items-center space-x-2 rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="h-4 w-4" />
                     <span>Cancel</span>
                   </button>
                   <button
                     onClick={handleSave}
                     diabled={saving || uploading.avatar || uploading.logo}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+                    className="flex items-center space-x-2 rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {saving ? (
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                     ) : (
-                      <Save className="w-4 h-4" />
+                      <Save className="h-4 w-4" />
                     )}
-                    <span>{saving ? "Saving..." : "Save Changes"}</span>
+                    <span>{saving ? 'Saving...' : 'Save Changes'}</span>
                   </button>
                 </div>
               </div>

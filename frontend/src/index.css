@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-display: "Urbanist", san-serif;
+  --font-display: 'Urbanist', san-serif;
   --breakpoint-3xl: 1920px;
-  --color-primary: #00A7F3;
+  --color-primary: #00a7f3;
 }
 
 @layer base {

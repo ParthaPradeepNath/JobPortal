@@ -1,32 +1,23 @@
-import { useState, useEffect } from "react";
-import {
-  User,
-  Mail,
-  Upload,
-  FileText,
-  Trash2,
-  Save,
-  X,
-  CheckCircle2,
-} from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_PATHS } from "../../utils/apiPaths";
-import { useAuth } from "../../context/AuthContext";
-import JobSeekerLayout from "../../components/layout/JobSeekerLayout";
-import toast from "react-hot-toast";
+import { useState, useEffect } from 'react';
+import { User, Mail, Upload, FileText, Trash2, Save, X, CheckCircle2 } from 'lucide-react';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { useAuth } from '../../context/AuthContext';
+import JobSeekerLayout from '../../components/layout/JobSeekerLayout';
+import toast from 'react-hot-toast';
 
 const UserProfile = () => {
   const { user, updateUser } = useAuth();
 
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    avatar: user?.avatar || "",
-    resume: user?.resume || "",
+    name: user?.name || '',
+    email: user?.email || '',
+    avatar: user?.avatar || '',
+    resume: user?.resume || '',
   });
-  const [displayName, setDisplayName] = useState(user?.name || "User");
-  const [displayAvatar, setDisplayAvatar] = useState(user?.avatar || "");
-  const [displayResume, setDisplayResume] = useState(user?.resume || "");
+  const [displayName, setDisplayName] = useState(user?.name || 'User');
+  const [displayAvatar, setDisplayAvatar] = useState(user?.avatar || '');
+  const [displayResume, setDisplayResume] = useState(user?.resume || '');
 
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -36,14 +27,14 @@ const UserProfile = () => {
   useEffect(() => {
     if (user) {
       setFormData({
-        name: user.name || "",
-        email: user.email || "",
-        avatar: user.avatar || "",
-        resume: user.resume || "",
+        name: user.name || '',
+        email: user.email || '',
+        avatar: user.avatar || '',
+        resume: user.resume || '',
       });
-      setDisplayName(user.name || "User");
-      setDisplayAvatar(user.avatar || "");
-      setDisplayResume(user.resume || "");
+      setDisplayName(user.name || 'User');
+      setDisplayAvatar(user.avatar || '');
+      setDisplayResume(user.resume || '');
     }
   }, [user]);
 
@@ -53,12 +44,10 @@ const UserProfile = () => {
 
   const uploadFile = async (file) => {
     const form = new FormData();
-    form.append("image", file);
-    const response = await axiosInstance.post(
-      API_PATHS.IMAGE.UPLOAD_IMAGES,
-      form,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
+    form.append('image', file);
+    const response = await axiosInstance.post(API_PATHS.IMAGE.UPLOAD_IMAGES, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data.imageUrl;
   };
 
@@ -68,10 +57,10 @@ const UserProfile = () => {
     setUploadingAvatar(true);
     try {
       const url = await uploadFile(file);
-      handleInputChange("avatar", url);
+      handleInputChange('avatar', url);
       setDisplayAvatar(url);
     } catch {
-      toast.error("Failed to upload avatar");
+      toast.error('Failed to upload avatar');
     } finally {
       setUploadingAvatar(false);
     }
@@ -80,18 +69,18 @@ const UserProfile = () => {
   const handleResumeChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.type !== "application/pdf") {
-      toast.error("Please upload a PDF resume");
+    if (file.type !== 'application/pdf') {
+      toast.error('Please upload a PDF resume');
       return;
     }
     setUploadingResume(true);
     try {
       const url = await uploadFile(file);
-      handleInputChange("resume", url);
+      handleInputChange('resume', url);
       setDisplayResume(url);
-      toast.success("Resume uploaded successfully");
+      toast.success('Resume uploaded successfully');
     } catch {
-      toast.error("Failed to upload resume");
+      toast.error('Failed to upload resume');
     } finally {
       setUploadingResume(false);
     }
@@ -102,29 +91,30 @@ const UserProfile = () => {
       await axiosInstance.post(API_PATHS.AUTH.DELETE_RESUME, {
         resumeUrl: formData.resume,
       });
-      handleInputChange("resume", "");
-      setDisplayResume("");
-      toast.success("Resume removed");
+      handleInputChange('resume', '');
+      setDisplayResume('');
+      toast.success('Resume removed');
     } catch {
-      toast.error("Failed to remove resume");
+      toast.error('Failed to remove resume');
     }
   };
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const response = await axiosInstance.put(
-        API_PATHS.AUTH.UPDATE_PROFILE,
-        { name: formData.name, avatar: formData.avatar, resume: formData.resume }
-      );
+      const response = await axiosInstance.put(API_PATHS.AUTH.UPDATE_PROFILE, {
+        name: formData.name,
+        avatar: formData.avatar,
+        resume: formData.resume,
+      });
       updateUser(response.data);
       setDisplayName(response.data.name);
-      setDisplayAvatar(response.data.avatar || "");
-      setDisplayResume(response.data.resume || "");
+      setDisplayAvatar(response.data.avatar || '');
+      setDisplayResume(response.data.resume || '');
       setEditMode(false);
-      toast.success("Profile updated successfully");
+      toast.success('Profile updated successfully');
     } catch {
-      toast.error("Failed to update profile");
+      toast.error('Failed to update profile');
     } finally {
       setSaving(false);
     }
@@ -132,10 +122,10 @@ const UserProfile = () => {
 
   const handleCancel = () => {
     setFormData({
-      name: user?.name || "",
-      email: user?.email || "",
-      avatar: user?.avatar || "",
-      resume: user?.resume || "",
+      name: user?.name || '',
+      email: user?.email || '',
+      avatar: user?.avatar || '',
+      resume: user?.resume || '',
     });
     setEditMode(false);
   };
@@ -144,36 +134,34 @@ const UserProfile = () => {
     <JobSeekerLayout active="profile">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-        <p className="text-gray-600 mt-1">
-          Manage your personal information and resume
-        </p>
+        <p className="mt-1 text-gray-600">Manage your personal information and resume</p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 sm:px-8 py-6 flex items-center justify-between">
+        <div className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-6 sm:px-8">
           <div className="flex items-center gap-4">
             {displayAvatar ? (
               <img
                 src={displayAvatar}
                 alt={displayName}
-                className="h-16 w-16 rounded-full object-cover border-4 border-white/30"
+                className="h-16 w-16 rounded-full border-4 border-white/30 object-cover"
               />
             ) : (
-              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
                 <User className="h-8 w-8 text-white" />
               </div>
             )}
             <div className="text-white">
               <h2 className="text-lg font-semibold">{displayName}</h2>
-              <p className="text-blue-100 text-sm">{formData.email}</p>
+              <p className="text-sm text-blue-100">{formData.email}</p>
             </div>
           </div>
 
           {!editMode && (
             <button
               onClick={() => setEditMode(true)}
-              className="px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+              className="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
             >
               Edit Profile
             </button>
@@ -190,16 +178,16 @@ const UserProfile = () => {
                     <img
                       src={formData.avatar}
                       alt="avatar"
-                      className="h-20 w-20 rounded-full object-cover border border-gray-200"
+                      className="h-20 w-20 rounded-full border border-gray-200 object-cover"
                     />
                   ) : (
-                    <div className="h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
                       <User className="h-10 w-10 text-gray-400" />
                     </div>
                   )}
                   {uploadingAvatar && (
-                    <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center">
-                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40">
+                      <div className="h-6 w-6 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                     </div>
                   )}
                 </div>
@@ -216,47 +204,41 @@ const UserProfile = () => {
 
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Full Name</label>
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your full name"
                 />
               </div>
 
               {/* Email (read-only) */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-medium text-gray-700">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                   <input
                     type="email"
                     value={formData.email}
                     disabled
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pr-4 pl-10 text-gray-500"
                   />
                 </div>
               </div>
 
               {/* Resume */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Resume
-                </label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Resume</label>
                 {formData.resume ? (
-                  <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg bg-gray-50">
+                  <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4">
                     <div className="flex items-center gap-3">
                       <FileText className="h-6 w-6 text-blue-600" />
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          Resume uploaded
-                        </p>
+                        <p className="text-sm font-medium text-gray-900">Resume uploaded</p>
                         <a
                           href={formData.resume}
                           target="_blank"
@@ -269,19 +251,17 @@ const UserProfile = () => {
                     </div>
                     <button
                       onClick={handleDeleteResume}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="rounded-lg p-2 text-red-600 transition-colors hover:bg-red-50"
                       title="Delete resume"
                     >
                       <Trash2 className="h-5 w-5" />
                     </button>
                   </div>
                 ) : (
-                  <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors">
-                    <Upload className="h-8 w-8 text-gray-400 mb-2" />
+                  <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 transition-colors hover:border-blue-400 hover:bg-blue-50/30">
+                    <Upload className="mb-2 h-8 w-8 text-gray-400" />
                     <span className="text-sm text-gray-600">
-                      {uploadingResume
-                        ? "Uploading..."
-                        : "Click to upload your resume (PDF)"}
+                      {uploadingResume ? 'Uploading...' : 'Click to upload your resume (PDF)'}
                     </span>
                     <input
                       type="file"
@@ -294,28 +274,28 @@ const UserProfile = () => {
               </div>
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+              <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
                 <button
                   onClick={handleCancel}
-                  className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center gap-2 rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
                 >
                   <X className="h-4 w-4" /> Cancel
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                  className="flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
                 >
                   <Save className="h-4 w-4" />
-                  {saving ? "Saving..." : "Save Changes"}
+                  {saving ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* Resume status */}
               <div>
-                <h3 className="text-sm font-medium text-gray-900 uppercase tracking-wide mb-4">
+                <h3 className="mb-4 text-sm font-medium tracking-wide text-gray-900 uppercase">
                   Resume
                 </h3>
                 {displayResume ? (
@@ -323,29 +303,21 @@ const UserProfile = () => {
                     href={displayResume}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-between p-4 bg-emerald-50 border border-emerald-100 rounded-xl hover:bg-emerald-100 transition-colors"
+                    className="flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 p-4 transition-colors hover:bg-emerald-100"
                   >
                     <div className="flex items-center gap-3">
                       <CheckCircle2 className="h-6 w-6 text-emerald-600" />
                       <div>
-                        <p className="text-sm font-medium text-emerald-700">
-                          Resume uploaded
-                        </p>
-                        <p className="text-xs text-emerald-600">
-                          Click to view
-                        </p>
+                        <p className="text-sm font-medium text-emerald-700">Resume uploaded</p>
+                        <p className="text-xs text-emerald-600">Click to view</p>
                       </div>
                     </div>
                     <FileText className="h-5 w-5 text-emerald-600" />
                   </a>
                 ) : (
-                  <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl">
-                    <p className="text-sm font-medium text-amber-700">
-                      No resume uploaded
-                    </p>
-                    <p className="text-xs text-amber-600 mt-1">
-                      Upload a resume to apply for jobs
-                    </p>
+                  <div className="rounded-xl border border-amber-100 bg-amber-50 p-4">
+                    <p className="text-sm font-medium text-amber-700">No resume uploaded</p>
+                    <p className="mt-1 text-xs text-amber-600">Upload a resume to apply for jobs</p>
                   </div>
                 )}
               </div>
